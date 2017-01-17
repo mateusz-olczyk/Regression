@@ -9,24 +9,39 @@ import java.util.List;
 public class DataSet {
 
     private int rows;
-    private int columnsSeparation; // Determines how many columns from the beginning are treated as external data, the rest are auxiliary
+    private int columns;
     private boolean hasColumnWithOnes; // Virtual column with ones
     private String[] header; // Columns labels
     private List<List<Double>> listOfDataRecords;
     private List<Double> listOfValues;
 
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
     public DataSet() {
         rows = 0;
-        columnsSeparation = 0;
-        hasColumnWithOnes = true;
+        columns = 0;
         listOfDataRecords = new ArrayList<>();
         listOfValues = new ArrayList<>();
     }
 
+    public Double getValue(int index) {
+        return listOfValues.get(index);
+    }
+
+    public List<Double> getDataRecord(int index) {
+        return listOfDataRecords.get(index);
+    }
+
     public void generateFromCSV(String path, int columnValuesIndex) {
         CSVReader r = new CSVReader(path);
-        columnsSeparation = r.getColumns()-1;
         rows = r.getRows();
+        columns = r.getColumns()-1;
         for (Double[] rowFromCSV : r) {
             // Prepare next record
             List<Double> rowData = new ArrayList<>();
