@@ -7,8 +7,8 @@ import static java.lang.Math.pow;
  */
 public class LinearRegression {
 
-    private DataSet ds;
-    Vector coefficients;
+    protected DataSet ds;
+    protected Vector coefficients;
 
     private int N() {
         return ds.getRows();
@@ -22,7 +22,7 @@ public class LinearRegression {
         return ds.getValue(index);
     }
 
-    private Vector getVector(int index) {
+    protected Vector getVector(int index) {
         Vector v = new Vector(ds.getDataRecord(index));
         v.addAuxiliaryOne();
         return v;
@@ -42,7 +42,7 @@ public class LinearRegression {
         return cost;
     }
 
-    Vector getDerivative() {
+    private Vector getDerivative() {
         Vector result = new Vector(C());
         for (int ci = 0; ci < C(); ci++) {
             double di = 0;

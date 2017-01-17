@@ -10,6 +10,8 @@ import java.util.List;
 public class Vector {
 
     private List<Double> values;
+    private int auxiliaryOneIndex = -1;
+    private int auxiliaryPolynomialsIndex = -1;
 
     // Creates Vector with specified size and filled with zeros
     public Vector(int size) {
@@ -52,7 +54,22 @@ public class Vector {
     }
 
     public void addAuxiliaryOne() {
-        values.add(1.);
+        if (auxiliaryOneIndex == -1) {
+            auxiliaryOneIndex = size();
+            values.add(1.);
+        }
+    }
+
+    public void addAuxiliaryPolynomials() {
+        if (auxiliaryPolynomialsIndex == -1) {
+            int range = auxiliaryOneIndex==-1?size():auxiliaryOneIndex;
+            auxiliaryPolynomialsIndex = auxiliaryOneIndex+1;
+            for (int i = 0; i < range; i++) {
+                for (int j = i; j < range; j++) {
+                    values.add(get(i)*get(j));
+                }
+            }
+        }
     }
 
     public Double get(int index) {
