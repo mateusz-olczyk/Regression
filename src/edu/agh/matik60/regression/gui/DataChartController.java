@@ -1,8 +1,7 @@
 package edu.agh.matik60.regression.gui;
 
 import edu.agh.matik60.regression.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Mateusz Olczyk on 2017-01-20.
  */
@@ -20,41 +22,53 @@ public class DataChartController {
     @FXML
     private Label labelCSVFilePath;
     @FXML
-    private TableColumn<obj, String> tablecolumnX;
-    @FXML
-    private TableView<obj> tableview;
+    private TableView<List<DoubleProperty>> tableview;
 
-    DataSet ds;
+//    private ObservableList<IntegerProperty> list = FXCollections.observableArrayList();
 
-    class obj {
-
-        StringProperty example;
-
-        obj(String s) {
-            example = new SimpleStringProperty(s);
-        }
-
-        public String getExample() {
-            return example.get();
-        }
-
-        public StringProperty exampleProperty() {
-            return example;
-        }
-    }
+    private DataSet ds = new DataSet();
 
     @FXML
     private void handleButtonLoadFromCSV() {
-//        labelCSVFilePath.setText("Button clicked!!!");
-        ObservableList<obj> list = FXCollections.observableArrayList();
-        list.add(new obj("a"));
-        list.add(new obj("b"));
-        tableview.setItems(list);
-//        tablecolumnX.setCellFactory(c->c.getValue().exampleProperty());
-        labelCSVFilePath.setText(list.get(0).toString());
-
-
-//        tablecolumnX.setCellFactory
+        initTableView();
     }
 
+    @FXML
+    private void handleButtonReset() {
+        //labelCSVFilePath.setText("Hello");
+//        tableview.getColumns().add(new TableColumn<IntegerProperty,Integer>("first"));
+//        list.clear();
+    }
+
+    @FXML
+    private void initialize() {
+        //tablecolumnX.setCellValueFactory(cell -> cell.getValue().asObject());
+    }
+
+    private void initTableView() {
+        tableview.getColumns().clear();
+        ds.generateFromCSV("example.csv",1);
+
+        TableColumn<List<DoubleProperty>,Double> tablecolumnValue = new TableColumn<>("value");
+        tableview.getColumns().add(tablecolumnValue);
+        tablecolumnValue.setCellValueFactory(c->c.getValue().get(0).asObject());
+        for (int i = 0; i < ds.getColumns(); i++) {
+            TableColumn<List<DoubleProperty>,Double> tablecolumnData = new TableColumn<>(ds.getHeader(i));
+            tableview.getColumns().add(tablecolumnData);
+            final int j = i+1;
+            tablecolumnData.setCellValueFactory(c->c.getValue().get(j).asObject());
+        }
+
+        ObservableList<List<DoubleProperty>> items = FXCollections.observableArrayList();
+        tableview.setItems(items);
+        for (int i = 0; i < ds.getRows(); i++) {
+            List<DoubleProperty> item = new ArrayList<>();
+            item.add(new SimpleDoubleProperty(ds.getValue(i)));
+            for (int j = 0; j < ds.getColumns(); j++) {
+                item.add(new SimpleDoubleProperty(ds.getDataRecord(i).get(j)));
+            }
+            items.add(item);
+        }
+
+    }
 }

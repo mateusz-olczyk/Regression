@@ -39,6 +39,8 @@ public class DataSet {
     }
 
     public void generateFromCSV(String path, int columnValuesIndex) {
+        listOfDataRecords.clear();
+        listOfValues.clear();
         CSVReader r = new CSVReader(path);
         rows = r.getRows();
         columns = r.getColumns()-1;
@@ -54,6 +56,14 @@ public class DataSet {
             // Add record to listOfDataRecords
             listOfDataRecords.add(rowData);
         }
+
+        // Initializing header
+        header = new String[columns];
+        for (int i = 0; i < columns; i++) {
+            header[i] = "x"+i;
+        }
     }
+
+    public String getHeader(int i) {return header[i];}
 
 }

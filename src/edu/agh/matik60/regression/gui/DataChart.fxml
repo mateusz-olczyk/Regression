@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -57,7 +56,7 @@
             <Label text="Gradient descent" GridPane.rowIndex="5" />
             <HBox prefHeight="51.0" prefWidth="532.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                  <Button mnemonicParsing="false" text="Reset" />
+                  <Button mnemonicParsing="false" onAction="#handleButtonReset" text="Reset" />
                   <Button mnemonicParsing="false" text="Perform one step" />
                   <Button mnemonicParsing="false" text="Perform 1000 steps" />
                   <Button mnemonicParsing="false" text="Perform 10000 steps" />
@@ -76,12 +75,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                <children>
-                  <TableView fx:id="tableview" layoutX="39.0" prefHeight="158.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columns>
-                      <TableColumn fx:id="tablecolumnX" prefWidth="75.0" text="x" />
-                      <TableColumn prefWidth="75.0" text="y" />
-                    </columns>
-                  </TableView>
+                  <TableView fx:id="tableview" layoutX="39.0" prefHeight="158.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="390.0">
