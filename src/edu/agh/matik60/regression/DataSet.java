@@ -1,5 +1,6 @@
 package edu.agh.matik60.regression;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +39,12 @@ public class DataSet {
         return listOfDataRecords.get(index);
     }
 
-    public void generateFromCSV(String path, int columnValuesIndex) {
+    public void generateFromCSV(File file, int columnValuesIndex) throws CSVReaderException {
         listOfDataRecords.clear();
         listOfValues.clear();
-        CSVReader r = new CSVReader(path);
-        rows = r.getRows();
-        columns = r.getColumns()-1;
+        CSVReader r = new CSVReader(file);
+        rows = r.getRowsSize();
+        columns = r.getColumnsSize()-1;
         for (Double[] rowFromCSV : r) {
             // Prepare next record
             List<Double> rowData = new ArrayList<>();

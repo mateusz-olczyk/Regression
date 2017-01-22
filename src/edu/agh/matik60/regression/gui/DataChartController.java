@@ -5,8 +5,11 @@ import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,18 +50,29 @@ public class DataChartController {
 
     @FXML
     private void handleButtonLoadFromCSV() {
-        //        FileChooser fileChooser = new FileChooser();
-        //        fileChooser.setTitle("Open Resource File");
-        //        fileChooser.showOpenDialog(primaryStage);
-        if (!isDataLoaded) {
-            isDataLoaded = true;
-            dataSet = new DataSet();
-            dataSet.generateFromCSV("example.csv",1);
-            regressionVisualiser = new RegressionVisualiser(dataSet, scatterChart, labelCurrentCost, labelCurrentCoefficients);
-            dataVisualiser = new DataVisualiser(dataSet, tableView);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open CSV File");
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if (file != null) {
+            try {
+                CSVReader reader = new CSVReader(file);
+                labelCSVFilePath.setText(file.getAbsolutePath());
+
+//                isDataLoaded = true;
+//                dataSet = new DataSet();
+//                dataSet.generateFromCSV(file,1);
+//                regressionVisualiser = new RegressionVisualiser(dataSet, scatterChart, labelCurrentCost, labelCurrentCoefficients);
+//                dataVisualiser = new DataVisualiser(dataSet, tableView);
+//                regressionVisualiser.show();
+//                dataVisualiser.show();
+
+            } catch (CSVReaderException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Loading error");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
         }
-        regressionVisualiser.show();
-        dataVisualiser.show();
 
     }
 

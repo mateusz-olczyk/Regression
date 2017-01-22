@@ -1,6 +1,7 @@
 package edu.agh.matik60.regression;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,38 +13,35 @@ import java.util.List;
  */
 public class CSVReader implements Iterable<Double[]> {
 
-    private String csvFilePath;
+    private File file;
     private String delimiter;
     private List<Double[]> data;
     private int columns;
 
-    public int getColumns() {
+    public int getColumnsSize() {
         return columns;
     }
 
-    public int getRows() {
+    public int getRowsSize() {
         return data.size();
     }
 
-    public String getCsvFilePath() {
-        if (csvFilePath == null) return "";
-        return csvFilePath;
-    }
-
-    public CSVReader(String path) {
-        csvFilePath = path;
+    public CSVReader(File file) throws CSVReaderException {
+        this.file = file;
         delimiter = ",";
         data = new ArrayList<>();
         columns = 0;
         loadData();
     }
 
-    private void loadData() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(getCsvFilePath()))) {
+    private void loadData() throws CSVReaderException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] strings = line.split(delimiter);
                 int l = strings.length;
+                // Number of columns must be constant
+                if (columns != 0 && l != columns) throw new CSVReaderException();
                 columns = l;
                 Double[] values = new Double[l];
                 for (int i=0;i<l;i++) {
@@ -52,7 +50,7 @@ public class CSVReader implements Iterable<Double[]> {
                 data.add(values);
             }
         } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
+            throw new CSVReaderException();
         }
     }
 
