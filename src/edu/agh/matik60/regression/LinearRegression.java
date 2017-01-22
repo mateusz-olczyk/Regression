@@ -66,4 +66,8 @@ public class LinearRegression {
     public void gradientStep(double alpha) {
         coefficients.add(getDerivative().multiply(-alpha));
     }
+
+    public String getCoefficientsAsString() {
+        return coefficients.toString();
+    }
 }

@@ -3,9 +3,9 @@ package edu.agh.matik60.regression.gui;
 import edu.agh.matik60.regression.DataSet;
 import edu.agh.matik60.regression.LinearRegression;
 import edu.agh.matik60.regression.PolynomialRegression;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 
 /**
  * Created by Mateusz Olczyk on 2017-01-22.
@@ -14,31 +14,36 @@ public class RegressionVisualiser {
 
     private DataSet dataSet;
     private ScatterChart<Number, Number> scatterChart;
+    private Label labelCurrentCost;
+    private Label labelCurrentCoefficients;
+
     private LinearRegression linearRegression;
-    private PolynomialRegression polymonialRegression;
+    private PolynomialRegression polynomialRegression;
     private XYChart.Series<Number, Number> seriesRawData;
     private XYChart.Series<Number,Number> seriesRegression;
 
-    public boolean isPolymonial() {
-        return polymonial;
+    public boolean isPolynomial() {
+        return polynomial;
     }
 
-    public void setPolymonial(boolean polymonial) {
-        this.polymonial = polymonial;
+    public void setPolynomial(boolean polynomial) {
+        this.polynomial = polynomial;
     }
 
-    private boolean polymonial;
+    private boolean polynomial;
 
     public LinearRegression getRegression() {
-        return isPolymonial()?polymonialRegression:linearRegression;
+        return isPolynomial()? polynomialRegression :linearRegression;
     }
 
-    public RegressionVisualiser(DataSet dataSet, ScatterChart<Number, Number> scatterChart) {
+    public RegressionVisualiser(DataSet dataSet, ScatterChart<Number, Number> scatterChart, Label labelCurrentCost, Label labelCurrentCoefficients) {
         this.dataSet = dataSet;
         this.scatterChart = scatterChart;
-        polymonial = false;
+        this.labelCurrentCost = labelCurrentCost;
+        this.labelCurrentCoefficients = labelCurrentCoefficients;
+        polynomial = false;
         linearRegression = new LinearRegression(dataSet);
-        polymonialRegression = new PolynomialRegression(dataSet);
+        polynomialRegression = new PolynomialRegression(dataSet);
     }
 
     public void show() {
@@ -58,6 +63,17 @@ public class RegressionVisualiser {
         scatterChart.getData().add(seriesRawData);
         scatterChart.getData().add(seriesRegression);
 
+        updateLabels();
+    }
+
+    public void reset() {
+        linearRegression.resetCoefficients();
+        polynomialRegression.resetCoefficients();
+    }
+
+    private void updateLabels() {
+        labelCurrentCost.setText(String.valueOf(getRegression().getCost()));
+        labelCurrentCoefficients.setText(getRegression().getCoefficientsAsString());
     }
 
 

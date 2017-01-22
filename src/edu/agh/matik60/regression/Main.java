@@ -1,5 +1,6 @@
 package edu.agh.matik60.regression;
 
+import edu.agh.matik60.regression.gui.DataChartController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,11 +17,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Regression");
-
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("gui/DataChart.fxml"));
             Scene scene = new Scene((AnchorPane) loader.load());
+            ((DataChartController)loader.getController()).setPrimaryStage(primaryStage);
+            primaryStage.setTitle("Regression");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {

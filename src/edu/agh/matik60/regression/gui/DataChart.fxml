@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.ScatterChart?>
 <?import javafx.scene.control.Button?>
@@ -49,17 +48,17 @@
             <Label text="Alpha coefficient" GridPane.rowIndex="1" />
             <Label text="Current cost" GridPane.rowIndex="3" />
             <Label text="Current coefficients" GridPane.rowIndex="4" />
-            <Slider GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <CheckBox mnemonicParsing="false" text="Polymonial" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Slider fx:id="slider" blockIncrement="1.0" majorTickUnit="1.0" max="20.0" min="1.0" minorTickCount="1" showTickMarks="true" snapToTicks="true" value="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <CheckBox fx:id="checkBoxPolynomial" mnemonicParsing="false" onAction="#handleCheckBoxPolynomial" text="Polynomial" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="labelCurrentCost" text="&lt;NONE&gt;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="labelCurrentCoefficients" text="&lt;NONE&gt;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Gradient descent" GridPane.rowIndex="5" />
             <HBox prefHeight="51.0" prefWidth="532.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
                   <Button mnemonicParsing="false" onAction="#handleButtonReset" text="Reset" />
-                  <Button mnemonicParsing="false" text="Perform one step" />
-                  <Button mnemonicParsing="false" text="Perform 1000 steps" />
-                  <Button mnemonicParsing="false" text="Perform 10000 steps" />
+                  <Button mnemonicParsing="false" onAction="#handleButtonPerformOneStep" text="Perform one step" />
+                  <Button mnemonicParsing="false" onAction="#handleButtonPerform1000Steps" text="Perform 1000 steps" />
+                  <Button mnemonicParsing="false" onAction="#handleButtonPerform10000Steps" text="Perform 10000 steps" />
                </children>
                <opaqueInsets>
                   <Insets />
