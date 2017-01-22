@@ -10,8 +10,12 @@ public class LinearRegression {
     protected DataSet ds;
     protected Vector coefficients;
 
+    public void resetCoefficients() {
+        coefficients.reset();
+    }
+
     private int N() {
-        return ds.getRows();
+        return ds.rowsSize();
     }
 
     private int C() {
@@ -30,7 +34,7 @@ public class LinearRegression {
 
     public LinearRegression(DataSet ds) {
         this.ds = ds;
-        coefficients = new Vector(ds.getColumns()+1);
+        coefficients = new Vector(ds.columnsSize()+1);
     }
 
     public double getCost() {
@@ -47,12 +51,16 @@ public class LinearRegression {
         for (int ci = 0; ci < C(); ci++) {
             double di = 0;
             for (int i = 0; i < N(); i++) {
-                di += (getVector(i).scalarProduct(coefficients)-Y(i))*getVector(i).get(ci);
+                di += (getComputedValue(i)-Y(i))*getVector(i).get(ci);
             }
             di = di*2/N();
             result.set(ci,di);
         }
         return result;
+    }
+
+    public double getComputedValue(int index) {
+        return getVector(index).scalarProduct(coefficients);
     }
 
     public void gradientStep(double alpha) {

@@ -15,11 +15,11 @@ public class DataSet {
     private List<List<Double>> listOfDataRecords;
     private List<Double> listOfValues;
 
-    public int getRows() {
+    public int rowsSize() {
         return rows;
     }
 
-    public int getColumns() {
+    public int columnsSize() {
         return columns;
     }
 

@@ -11,6 +11,11 @@ public class Vector {
 
     private List<Double> values;
     private int auxiliaryOneIndex = -1;
+
+    public int getAuxiliaryPolynomialsIndex() {
+        return auxiliaryPolynomialsIndex;
+    }
+
     private int auxiliaryPolynomialsIndex = -1;
 
     // Creates Vector with specified size and filled with zeros
@@ -18,6 +23,12 @@ public class Vector {
         values = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             values.add(0.);
+        }
+    }
+
+    public void reset() {
+        for (int i = 0; i < size(); i++) {
+            set(i,0.);
         }
     }
 

@@ -7,7 +7,7 @@ public class PolynomialRegression extends LinearRegression {
 
     public PolynomialRegression(DataSet ds) {
         super(ds);
-        int data_size = ds.getColumns();
+        int data_size = ds.columnsSize();
         coefficients = new Vector(data_size+1+(data_size+1)*data_size/2);
     }
 
