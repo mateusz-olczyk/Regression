@@ -31,16 +31,18 @@ public class RegressionVisualiser {
     }
 
     private boolean polynomial;
+    private  int argumentForChart;
 
     public LinearRegression getRegression() {
         return isPolynomial()? polynomialRegression :linearRegression;
     }
 
-    public RegressionVisualiser(DataSet dataSet, ScatterChart<Number, Number> scatterChart, Label labelCurrentCost, Label labelCurrentCoefficients) {
+    public RegressionVisualiser(DataSet dataSet, ScatterChart<Number, Number> scatterChart, Label labelCurrentCost, Label labelCurrentCoefficients, int argumentForChart) {
         this.dataSet = dataSet;
         this.scatterChart = scatterChart;
         this.labelCurrentCost = labelCurrentCost;
         this.labelCurrentCoefficients = labelCurrentCoefficients;
+        this.argumentForChart = argumentForChart;
         polynomial = false;
         linearRegression = new LinearRegression(dataSet);
         polynomialRegression = new PolynomialRegression(dataSet);
@@ -54,7 +56,7 @@ public class RegressionVisualiser {
 
         scatterChart.getData().clear();
         for (int i = 0; i < dataSet.rowsSize(); i++) {
-            Double x = dataSet.getDataRecord(i).get(0);
+            Double x = dataSet.getDataRecord(i).get(argumentForChart);
             Double y = dataSet.getValue(i);
             seriesRegression.getData().add(new XYChart.Data<>(x, getRegression().getComputedValue(i)));
             seriesRawData.getData().add(new XYChart.Data<>(x, y));
